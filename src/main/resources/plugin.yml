@@ -1,0 +1,9 @@
+name: SkyShop
+version: '${project.version}'
+main: de.laurinhummel.skyshop.Main
+api-version: 1.16
+load: STARTUP
+depend: [ Vault ]
+authors: [ SkyExit, JoeJoeSpielt ]
+description: Your n°1 Shop Plugin
+website: laurinhummel.de
