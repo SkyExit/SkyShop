@@ -15,7 +15,7 @@ public class MoneyCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         Player player = (Player) sender;
-        if(args.length == 1) {
+        if(args.length == 0) {
             player.sendMessage(ChatColor.AQUA + "Your Balance: " + ChatColor.GOLD + eco.format(eco.getBalance(player)));
             return true;
         }
@@ -49,6 +49,9 @@ public class MoneyCommand implements CommandExecutor {
                     eco.depositPlayer(target, Double.parseDouble(args[2]));
                     player.sendMessage(ChatColor.AQUA + "Money was set!");
                 }
+            }
+            case "help" -> {
+                player.sendMessage(ChatColor.BLUE + "Valid arguments: " + "\n" + ChatColor.GREEN + "/econ [Name / add, get, set] <Name> <Amount>");
             }
             default -> {
                 Player target = Bukkit.getPlayer(args[0]);

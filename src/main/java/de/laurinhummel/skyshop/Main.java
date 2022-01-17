@@ -1,13 +1,27 @@
 package de.laurinhummel.skyshop;
 
+import com.mojang.authlib.properties.Property;
 import de.laurinhummel.skyshop.commands.MoneyCommand;
 import de.laurinhummel.skyshop.commands.ShopCommand;
-import net.milkbowl.vault.chat.Chat;
+import de.laurinhummel.skyshop.events.PlayerInventoryOpensListener;
+import de.laurinhummel.skyshop.events.ShopClickListener;
+import de.laurinhummel.skyshop.shopsystem.ShopItemBuilder;
 import net.milkbowl.vault.economy.Economy;
-import net.milkbowl.vault.permission.Permission;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.event.Listener;
+import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+import com.mojang.authlib.GameProfile;
 
+import java.lang.reflect.Field;
+import java.util.UUID;
 import java.util.logging.Logger;
 
 public final class Main extends JavaPlugin {
@@ -28,9 +42,15 @@ public final class Main extends JavaPlugin {
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
+        PluginManager pluginManager = Bukkit.getPluginManager();
 
         getCommand("econ").setExecutor(new MoneyCommand());
         getCommand("shop").setExecutor(new ShopCommand());
+
+        pluginManager.registerEvents((Listener) new PlayerInventoryOpensListener(), (Plugin) this);
+        pluginManager.registerEvents((Listener) new ShopClickListener(), (Plugin) this);
+
+        Main.buildShop();
     }
 
     private boolean setupEconomy() {
@@ -42,7 +62,7 @@ public final class Main extends JavaPlugin {
             return false;
         }
         econ = rsp.getProvider();
-        return econ != null;
+        return true;
     }
 
     public static Economy getEconomy() {
@@ -54,7 +74,41 @@ public final class Main extends JavaPlugin {
         log.info(String.format("[%s] Disabled Version %s", getDescription().getName(), getDescription().getVersion()));
     }
 
+    public static ItemStack createSkull(String url, String displayName, int enLVL) {
+        ItemStack head = new ItemStack(Material.LEGACY_SKULL_ITEM, 1, (short) 3);
+        if(url.isEmpty()) return head;
+
+        SkullMeta headMeta = (SkullMeta) head.getItemMeta();
+        GameProfile profile = new GameProfile(UUID.randomUUID(), null);
+
+        profile.getProperties().put("textures", new Property("textures", url));
+
+        try {
+            Field profileField = headMeta.getClass().getDeclaredField("profile");
+            profileField.setAccessible(true);
+            profileField.set(headMeta, profile);
+        } catch (IllegalArgumentException | NoSuchFieldException | SecurityException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        headMeta.setDisplayName(displayName);
+        headMeta.addEnchant(Enchantment.DAMAGE_ALL, enLVL, true);
+        headMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        head.setItemMeta(headMeta);
+        return head;
+    }
+
+    public static void buildShop() {
+        getShopItemBuilder().buildShopItem(Material.DIAMOND, "DIAMOND", 100, 80, ShopItemBuilder.Categories.ORES, true);
+        getShopItemBuilder().buildShopItem(Material.REDSTONE, "REDSTONE", 5, 1, ShopItemBuilder.Categories.ORES, true);
+        getShopItemBuilder().buildShopItem(Material.EMERALD, "EMERALD", 20, 5, ShopItemBuilder.Categories.ORES, true);
+        getShopItemBuilder().buildShopItem(Material.COAL, "COAL", 10, 3, ShopItemBuilder.Categories.ORES, true);
+    }
+
     public static Main getPlugin() {
         return plugin;
+    }
+
+    public static ShopItemBuilder getShopItemBuilder() {
+        return new ShopItemBuilder();
     }
 }
