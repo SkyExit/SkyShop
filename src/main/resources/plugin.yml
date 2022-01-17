@@ -7,3 +7,9 @@ depend: [ Vault ]
 authors: [ SkyExit, JoeJoeSpielt ]
 description: Your n°1 Shop Plugin
 website: laurinhummel.de
+
+commands:
+  shop:
+    description: Shop
+  econ:
+    description: Economy
