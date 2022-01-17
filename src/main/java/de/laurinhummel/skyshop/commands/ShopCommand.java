@@ -43,7 +43,6 @@ public class ShopCommand implements CommandExecutor {
             shopInv.setItem(6, placeholder);
             shopInv.setItem(7, placeholder);
             shopInv.setItem(8, placeholder);
-            shopInv.setItem(9, placeholder);
             
             player.openInventory(shopInv);
         }

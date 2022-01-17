@@ -15,6 +15,10 @@ public class MoneyCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         Player player = (Player) sender;
+        if(args.length == 1) {
+            player.sendMessage(ChatColor.AQUA + "Your Balance: " + ChatColor.GOLD + eco.format(eco.getBalance(player)));
+            return true;
+        }
         switch (args[0]) {
             case "add" -> {
                 if (args.length == 3) {
@@ -47,7 +51,13 @@ public class MoneyCommand implements CommandExecutor {
                 }
             }
             default -> {
-                player.sendMessage(ChatColor.AQUA + "Your Balance: " + ChatColor.GOLD + eco.format(eco.getBalance(player)));
+                Player target = Bukkit.getPlayer(args[0]);
+                if(target != null) {
+                    player.sendMessage(ChatColor.AQUA + "The Balance of " + ChatColor.GOLD + target.getName() +
+                            ChatColor.AQUA + " is: " + ChatColor.GOLD + eco.format(eco.getBalance(target)));
+                } else {
+                    player.sendMessage(ChatColor.RED + "Requested player isn't online!");
+                }
             }
         }
 
