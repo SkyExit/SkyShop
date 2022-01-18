@@ -12,6 +12,5 @@
 <h3>Features:</h3>
 
 - Working shop command (/shop) with multiple categories for Blocks, Ores, Foraging, Food and Crops
-  - (You can't buy anything yet)
 - Working economy command (/econ [Name / add, get, set] 'Name' 'Amount') to manage balance
   - Your balance is shown in your Inventory too
