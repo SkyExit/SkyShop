@@ -1,5 +1,5 @@
 <h1>Your n°1 Shop Plugin</h1>
-<br>
+
 <h3>Installation:</h3>
 
 - Download the Plugin from the "releases" tab
@@ -8,8 +8,7 @@
 - Download any Economy Plugin (I recommend EssentialsX) and put it there too
 - Start the Server
 - Have fun!
-<br/>
-<br/>
+
 <h3>Features:</h3>
 
 - Working shop command (/shop) with multiple categories for Blocks, Ores, Foraging, Food and Crops
