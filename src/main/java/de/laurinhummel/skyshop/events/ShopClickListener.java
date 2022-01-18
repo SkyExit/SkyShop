@@ -49,7 +49,7 @@ public class ShopClickListener implements Listener {
                     Main.getShopPageBuilder().buildBlocksPage((Player) event.getWhoClicked());
                 } else if(currentItem.equals(Material.SPRUCE_SAPLING)) {
                     Main.getShopPageBuilder().buildForagingPage((Player) event.getWhoClicked());
-                } else if(currentItem.equals(Material.APPLE)) {
+                } else if(currentItem.equals(Material.BEEF)) {
                     Main.getShopPageBuilder().buildFoodPage((Player) event.getWhoClicked());
                 } else if(currentItem.equals(Material.WHEAT)) {
                     Main.getShopPageBuilder().buildCropsPage((Player) event.getWhoClicked());

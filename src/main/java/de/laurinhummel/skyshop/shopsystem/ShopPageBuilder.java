@@ -14,11 +14,11 @@ public class ShopPageBuilder extends ShopCommand {
         Main.getShopItemLister().setCurrentCategories(ShopItemBuilder.Categories.HOMEPAGE);
         Inventory shop = getEmptyShop(player);
 
-        shop.setItem(19, new ItemStack(Material.BRICKS));
+        shop.setItem(20, new ItemStack(Material.BRICKS));
         shop.setItem(22, new ItemStack(Material.IRON_INGOT));
-        shop.setItem(25, new ItemStack(Material.SPRUCE_SAPLING));
-        shop.setItem(29, new ItemStack(Material.APPLE));
-        shop.setItem(33, new ItemStack(Material.WHEAT));
+        shop.setItem(24, new ItemStack(Material.SPRUCE_SAPLING));
+        shop.setItem(30, new ItemStack(Material.BEEF));
+        shop.setItem(32, new ItemStack(Material.WHEAT));
 
         shop.setItem(46, Main.getNavigationItems().getCrossItem());
         shop.setItem(52, Main.getNavigationItems().getCrossItem());

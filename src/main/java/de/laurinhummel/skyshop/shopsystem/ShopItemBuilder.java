@@ -33,10 +33,10 @@ public class ShopItemBuilder {
         if(enchanted) itemMeta.addEnchant(Enchantment.DAMAGE_ALL, 1, true);
         itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        itemMeta.setDisplayName(title);
+        itemMeta.setDisplayName(ChatColor.GREEN + title);
         ArrayList<String> itemLore = new ArrayList<>();
-            itemLore.add(ChatColor.AQUA + "Buy Price: " + Main.getEconomy().format(priceBuy));
-            itemLore.add(ChatColor.AQUA + "Sell Price: " + Main.getEconomy().format(priceSell));
+            itemLore.add(ChatColor.AQUA + "Buy Price: " + ChatColor.GOLD + Main.getEconomy().format(priceBuy));
+            itemLore.add(ChatColor.AQUA + "Sell Price: " + ChatColor.GOLD + Main.getEconomy().format(priceSell));
         itemMeta.setLore(itemLore);
         itemStack.setItemMeta(itemMeta);
 
