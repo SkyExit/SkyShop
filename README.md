@@ -1,6 +1,7 @@
 # SkyShop
 Your n°1 Shop Plugin
 
+
 Installation
 - Download the Plugin from the "releases" tab
 - Put it into your Servers "plugins" folder
