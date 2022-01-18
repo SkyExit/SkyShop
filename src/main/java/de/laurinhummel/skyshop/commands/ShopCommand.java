@@ -18,46 +18,9 @@ public class ShopCommand implements CommandExecutor {
             FileConfiguration config = Main.getPlugin().getConfig();
             Player player = (Player) sender;
 
-            Inventory shopInv = getShopInv(player);
-
-            //PLACEHOLDERS
-            ItemStack placeholder = Main.getNavigationItems().getPlaceholderItem();
-            shopInv.setItem(0, placeholder);
-            shopInv.setItem(1, placeholder);
-            shopInv.setItem(2, placeholder);
-            shopInv.setItem(3, placeholder);
-            shopInv.setItem(4, placeholder);
-            shopInv.setItem(5, placeholder);
-            shopInv.setItem(6, placeholder);
-            shopInv.setItem(7, placeholder);
-            shopInv.setItem(8, placeholder);
-            shopInv.setItem(45, placeholder);
-            shopInv.setItem(47, placeholder);
-            shopInv.setItem(48, placeholder);
-            shopInv.setItem(50, placeholder);
-            shopInv.setItem(51, placeholder);
-            shopInv.setItem(53, placeholder);
-
-            //NAVIGATION
-            shopInv.setItem(46, Main.getNavigationItems().getArrowLeft());
-            shopInv.setItem(52, Main.getNavigationItems().getArrowRight());
-            shopInv.setItem(49, Main.getNavigationItems().getPlayerHeadWallet(player));
-
             //SHOP ITEMS
-            Main.getShopPageBuilder().buildHomepage(shopInv, player);
-
-            /* for(int a = 0; a < Main.getShopItemBuilder().getShopItemsOres().size(); a++) {
-                shopInv.setItem(a+9, Main.getShopItemBuilder().getShopItemsOres().get(a));
-            } */
-
-            player.openInventory(shopInv);
-
+            Main.getShopPageBuilder().buildHomepage(player);
         }
         return false;
-    }
-
-    public Inventory getShopInv(Player player) {
-        Inventory shopInv = Bukkit.getServer().createInventory(player, 54, ChatColor.AQUA + "Sky" + ChatColor.GOLD + "Shop");
-        return shopInv;
     }
 }

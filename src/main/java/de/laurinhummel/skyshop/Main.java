@@ -119,4 +119,6 @@ public final class Main extends JavaPlugin {
     public static ShopPageBuilder getShopPageBuilder() {
         return new ShopPageBuilder();
     }
+
+    public static ShopCommand getShopCommand() {return new ShopCommand(); }
 }

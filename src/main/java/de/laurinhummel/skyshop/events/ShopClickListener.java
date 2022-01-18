@@ -1,10 +1,12 @@
 package de.laurinhummel.skyshop.events;
 
 import de.laurinhummel.skyshop.Main;
+import de.laurinhummel.skyshop.shopsystem.ShopItemBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Item;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -26,11 +28,32 @@ public class ShopClickListener implements Listener {
             //SWITCH PAGE TO LEFT
             if(event.getSlot() == 46 && event.getCurrentItem().getItemMeta().getEnchantLevel(Enchantment.DAMAGE_ALL) == 11) {
                event.setCancelled(true);
+               Main.getShopPageBuilder().buildHomepage((Player) event.getWhoClicked());
             }
 
             //SWITCH PAGE TO RIGHT
             if(event.getSlot() == 52 && event.getCurrentItem().getItemMeta().getEnchantLevel(Enchantment.DAMAGE_ALL) == 12) {
                 event.setCancelled(true);
+            }
+
+            if(event.getSlot() == 52 && event.getCurrentItem().getItemMeta().getEnchantLevel(Enchantment.DAMAGE_ALL) == 13) {
+                event.setCancelled(true);
+            }
+
+            if(Main.getShopItemLister().getCurrentCategories().equals(ShopItemBuilder.Categories.HOMEPAGE)) {
+                event.setCancelled(true);
+                Material currentItem = event.getCurrentItem().getType();
+                if(currentItem.equals(Material.IRON_INGOT)) {
+                    Main.getShopPageBuilder().buildOresPage((Player) event.getWhoClicked());
+                } else if(currentItem.equals(Material.BRICKS)) {
+                    Main.getShopPageBuilder().buildBlocksPage((Player) event.getWhoClicked());
+                } else if(currentItem.equals(Material.SPRUCE_SAPLING)) {
+                    Main.getShopPageBuilder().buildForagingPage((Player) event.getWhoClicked());
+                } else if(currentItem.equals(Material.APPLE)) {
+                    Main.getShopPageBuilder().buildFoodPage((Player) event.getWhoClicked());
+                } else if(currentItem.equals(Material.WHEAT)) {
+                    Main.getShopPageBuilder().buildCropsPage((Player) event.getWhoClicked());
+                }
             }
         }
     }
