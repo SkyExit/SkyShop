@@ -17,10 +17,14 @@ public class ShopClickListener implements Listener {
     String ArrowLeft = "ODY1MmUyYjkzNmNhODAyNmJkMjg2NTFkN2M5ZjI4MTlkMmU5MjM2OTc3MzRkMThkZmRiMTM1NTBmOGZkYWQ1ZiJ9fX0=";
     String ArrowRight = "MmEzYjhmNjgxZGFhZDhiZjQzNmNhZThkYTNmZTgxMzFmNjJhMTYyYWI4MWFmNjM5YzNlMDY0NGFhNmFiYWMyZiJ9fX0=";
 
+    public static ItemStack buyItemStack;
+
     @EventHandler
     public void onPlayerClickInventory(InventoryClickEvent event) {
         if(event.getView().getTitle().equals(ChatColor.AQUA + "Sky" + ChatColor.GOLD + "Shop")) {
-            if ((event.getCurrentItem() == null) || (event.getCurrentItem().getType().equals(Material.AIR)) || (event.getCurrentItem().getType().equals(Material.GRAY_STAINED_GLASS_PANE))) {
+            if ((event.getCurrentItem() == null) || (event.getCurrentItem().getType().equals(Material.AIR)) ||
+                    (event.getCurrentItem().getType().equals(Material.GRAY_STAINED_GLASS_PANE)) ||
+                    event.getCurrentItem().isSimilar(Main.getNavigationItems().getPlayerHeadWallet((Player) event.getWhoClicked()))) {
                 event.setCancelled(true);
                 return;
             }
@@ -29,15 +33,18 @@ public class ShopClickListener implements Listener {
             if(event.getSlot() == 46 && event.getCurrentItem().getItemMeta().getEnchantLevel(Enchantment.DAMAGE_ALL) == 11) {
                event.setCancelled(true);
                Main.getShopPageBuilder().buildHomepage((Player) event.getWhoClicked());
+               return;
             }
 
             //SWITCH PAGE TO RIGHT
             if(event.getSlot() == 52 && event.getCurrentItem().getItemMeta().getEnchantLevel(Enchantment.DAMAGE_ALL) == 12) {
                 event.setCancelled(true);
+                return;
             }
 
             if(event.getSlot() == 52 && event.getCurrentItem().getItemMeta().getEnchantLevel(Enchantment.DAMAGE_ALL) == 13) {
                 event.setCancelled(true);
+                return;
             }
 
             if(Main.getShopItemLister().getCurrentCategories().equals(ShopItemBuilder.Categories.HOMEPAGE)) {
@@ -54,6 +61,22 @@ public class ShopClickListener implements Listener {
                 } else if(currentItem.equals(Material.WHEAT)) {
                     Main.getShopPageBuilder().buildCropsPage((Player) event.getWhoClicked());
                 }
+                return;
+            }
+
+            if(!Main.getShopItemLister().getCurrentCategories().equals(ShopItemBuilder.Categories.BUYPAGE)) {
+                ItemStack clickedItem = event.getCurrentItem();
+                buyItemStack = clickedItem;
+                Main.getShopPageBuilder().buildItemBuyPage(clickedItem, (Player) event.getWhoClicked());
+                event.setCancelled(true);
+            }
+
+            if(Main.getShopItemLister().getCurrentCategories().equals(ShopItemBuilder.Categories.BUYPAGE)) {
+                ItemStack clickedItem = event.getCurrentItem();
+                if(clickedItem.getType() == Material.LIME_STAINED_GLASS_PANE || clickedItem.getType() == Material.RED_STAINED_GLASS_PANE) {
+                    Main.getItemActionManager().performItemAction(clickedItem, buyItemStack, (Player) event.getWhoClicked());
+                }
+                event.setCancelled(true);
             }
         }
     }

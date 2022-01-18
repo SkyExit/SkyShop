@@ -1,5 +1,5 @@
 name: SkyShop
-version: '0.2.4'
+version: '1.0.0'
 main: de.laurinhummel.skyshop.Main
 api-version: 1.16
 load: POSTWORLD

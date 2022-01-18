@@ -23,7 +23,8 @@ public class ShopItemBuilder {
         BLOCKS,
         CROPS,
         FOOD,
-        FORAGING
+        FORAGING,
+        BUYPAGE
     }
 
     public final void buildShopItem(Material material, String title, int priceBuy, int priceSell, Categories categories, boolean enchanted) {

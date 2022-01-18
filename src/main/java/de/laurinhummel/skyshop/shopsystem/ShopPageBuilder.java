@@ -96,6 +96,21 @@ public class ShopPageBuilder extends ShopCommand {
         reloadShop(shop, player);
     }
 
+    public void buildItemBuyPage(ItemStack itemStack, Player player) {
+        Main.getShopItemLister().setCurrentCategories(ShopItemBuilder.Categories.BUYPAGE);
+        Inventory shop = getEmptyShop(player);
+
+        shop.setItem(19, Main.getNavigationItems().buildSellGlassItem(false, 64, itemStack, player));
+        shop.setItem(20, Main.getNavigationItems().buildSellGlassItem(false, 16, itemStack, player));
+        shop.setItem(21, Main.getNavigationItems().buildSellGlassItem(false, 1, itemStack, player));
+        shop.setItem(22, itemStack);
+        shop.setItem(23, Main.getNavigationItems().buildSellGlassItem(true, 1, itemStack, player));
+        shop.setItem(24, Main.getNavigationItems().buildSellGlassItem(true, 16, itemStack, player));
+        shop.setItem(25, Main.getNavigationItems().buildSellGlassItem(true, 64, itemStack, player));
+
+        reloadShop(shop, player);
+    }
+
     public void reloadShop(Inventory shop, Player player) {
         //player.closeInventory();
         player.openInventory(shop);

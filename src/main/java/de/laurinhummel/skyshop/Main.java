@@ -5,10 +5,7 @@ import de.laurinhummel.skyshop.commands.MoneyCommand;
 import de.laurinhummel.skyshop.commands.ShopCommand;
 import de.laurinhummel.skyshop.events.PlayerInventoryOpensListener;
 import de.laurinhummel.skyshop.events.ShopClickListener;
-import de.laurinhummel.skyshop.shopsystem.NavigationItems;
-import de.laurinhummel.skyshop.shopsystem.ShopItemBuilder;
-import de.laurinhummel.skyshop.shopsystem.ShopItemLister;
-import de.laurinhummel.skyshop.shopsystem.ShopPageBuilder;
+import de.laurinhummel.skyshop.shopsystem.*;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -120,5 +117,7 @@ public final class Main extends JavaPlugin {
         return new ShopPageBuilder();
     }
 
-    public static ShopCommand getShopCommand() {return new ShopCommand(); }
+    public static ShopCommand getShopCommand() { return new ShopCommand(); }
+
+    public static ItemActionManager getItemActionManager() { return new ItemActionManager(); }
 }

@@ -1,6 +1,7 @@
 package de.laurinhummel.skyshop.shopsystem;
 
 import de.laurinhummel.skyshop.Main;
+import net.milkbowl.vault.economy.Economy;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -11,6 +12,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class NavigationItems {
     String PREFIX = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUv";
@@ -75,6 +77,35 @@ public class NavigationItems {
         headItem.setItemMeta(headSkullMeta);
 
         return headItem;
+    }
+
+    public ItemStack buildSellGlassItem(boolean action, int amount, ItemStack item, Player player) {
+        //action: true = buy; false = sell
+
+        Economy economy = Main.getEconomy();
+
+        //The Item to sell/buy
+        ItemMeta itemMeta = item.getItemMeta();
+        assert itemMeta != null;
+        List<String> lores = itemMeta.getLore();
+        assert lores != null;
+        String[] buyPrice = lores.get(0).split("\\$");
+        String[] sellPrice = lores.get(1).split("\\$");
+
+        int buyInt = Integer.parseInt(buyPrice[1].replace(",", ""));
+        int sellInt = Integer.parseInt(sellPrice[1].replace(",", ""));
+
+        ItemStack glassItem;
+        glassItem = action ? new ItemStack(Material.LIME_STAINED_GLASS_PANE, amount) : new ItemStack(Material.RED_STAINED_GLASS_PANE, amount);
+        ItemMeta glassItemMeta = glassItem.getItemMeta();
+        assert glassItemMeta != null;
+        glassItemMeta.setDisplayName(action ? ChatColor.GREEN + "BUY " + amount : ChatColor.DARK_RED + "Sell " + amount);
+        ArrayList<String> glassLore = new ArrayList<>();
+        glassLore.add(action ? ChatColor.DARK_GREEN + "Buy for: " + economy.format(amount*buyInt) : ChatColor.RED + "Sell for: " + economy.format(amount*sellInt));
+        glassItemMeta.setLore(glassLore);
+        glassItem.setItemMeta(glassItemMeta);
+
+        return glassItem;
     }
 
 
