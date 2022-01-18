@@ -22,11 +22,6 @@ public class ShopClickListener implements Listener {
                 event.setCancelled(true);
                 return;
             }
-            if(event.getCurrentItem().getType() == Material.BARRIER) {
-                event.getWhoClicked().closeInventory();
-                event.setCancelled(true);
-                return;
-            }
 
             //SWITCH PAGE TO LEFT
             if(event.getSlot() == 46 && event.getCurrentItem().getItemMeta().getEnchantLevel(Enchantment.DAMAGE_ALL) == 11) {

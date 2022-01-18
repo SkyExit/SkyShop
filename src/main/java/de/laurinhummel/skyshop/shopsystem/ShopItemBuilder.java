@@ -13,12 +13,13 @@ import java.util.*;
 public class ShopItemBuilder {
 
     public static ArrayList<ItemStack> shopItemsOres = new ArrayList<>();
-    private ArrayList<ItemStack> shopItemsBlocks = new ArrayList<>();
-    private ArrayList<ItemStack> shopItemsCrops = new ArrayList<>();
-    private ArrayList<ItemStack> shopItemsFood = new ArrayList<>();
-    private ArrayList<ItemStack> shopItemsForaging = new ArrayList<>();
+    public static ArrayList<ItemStack> shopItemsBlocks = new ArrayList<>();
+    public static ArrayList<ItemStack> shopItemsCrops = new ArrayList<>();
+    public static ArrayList<ItemStack> shopItemsFood = new ArrayList<>();
+    public static ArrayList<ItemStack> shopItemsForaging = new ArrayList<>();
 
     public enum Categories {
+        HOMEPAGE,
         ORES,
         BLOCKS,
         CROPS,
@@ -40,7 +41,6 @@ public class ShopItemBuilder {
         itemMeta.setLore(itemLore);
         itemStack.setItemMeta(itemMeta);
 
-        /*
         switch (categories) {
             case ORES -> shopItemsOres.add(itemStack);
             case BLOCKS -> shopItemsBlocks.add(itemStack);
@@ -48,10 +48,6 @@ public class ShopItemBuilder {
             case FOOD -> shopItemsFood.add(itemStack);
             case FORAGING -> shopItemsForaging.add(itemStack);
         }
-         */
-
-        getShopItemsOres().add(itemStack);
-        System.out.println("added " + itemStack.getItemMeta().getDisplayName() + getShopItemsOres().size());
     }
 
     public ArrayList<ItemStack> getShopItemsOres() {

@@ -1,19 +1,15 @@
 package de.laurinhummel.skyshop.commands;
 
 import de.laurinhummel.skyshop.Main;
-import de.laurinhummel.skyshop.shopsystem.ShopItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 public class ShopCommand implements CommandExecutor {
     @Override
@@ -21,30 +17,11 @@ public class ShopCommand implements CommandExecutor {
         if(sender instanceof Player) {
             FileConfiguration config = Main.getPlugin().getConfig();
             Player player = (Player) sender;
-            String PREFIX = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUv";
-            String ArrowLeft = "ODY1MmUyYjkzNmNhODAyNmJkMjg2NTFkN2M5ZjI4MTlkMmU5MjM2OTc3MzRkMThkZmRiMTM1NTBmOGZkYWQ1ZiJ9fX0=";
-            String ArrowRight = "MmEzYjhmNjgxZGFhZDhiZjQzNmNhZThkYTNmZTgxMzFmNjJhMTYyYWI4MWFmNjM5YzNlMDY0NGFhNmFiYWMyZiJ9fX0=";
-            Inventory shopInv = Bukkit.getServer().createInventory(player, 54, ChatColor.AQUA + "Sky" + ChatColor.GOLD + "Shop");
 
-            //PLACEHOLDER
-            ItemStack placeholder = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
-            ItemMeta placeholdermeta = placeholder.getItemMeta();
-            assert placeholdermeta != null;
-            placeholdermeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-            placeholdermeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-            placeholdermeta.setDisplayName(ChatColor.RED + "PLACEHOLDER");
-            placeholder.setItemMeta(placeholdermeta);
-
-            //Close Shop
-            ItemStack closeShop = new ItemStack(Material.BARRIER);
-            ItemMeta closeShopMeta = closeShop.getItemMeta();
-            assert closeShopMeta != null;
-            closeShopMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-            closeShopMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-            closeShopMeta.setDisplayName(ChatColor.RED + "CLOSE SHOP");
-            closeShop.setItemMeta(closeShopMeta);
+            Inventory shopInv = getShopInv(player);
 
             //PLACEHOLDERS
+            ItemStack placeholder = Main.getNavigationItems().getPlaceholderItem();
             shopInv.setItem(0, placeholder);
             shopInv.setItem(1, placeholder);
             shopInv.setItem(2, placeholder);
@@ -62,20 +39,25 @@ public class ShopCommand implements CommandExecutor {
             shopInv.setItem(53, placeholder);
 
             //NAVIGATION
-            shopInv.setItem(46, Main.createSkull(PREFIX + ArrowLeft, ChatColor.DARK_GRAY + "Previous Page", 11));
-            shopInv.setItem(52, Main.createSkull(PREFIX + ArrowRight, ChatColor.DARK_GRAY + "Next Page", 12));
-            shopInv.setItem(49, closeShop);
+            shopInv.setItem(46, Main.getNavigationItems().getArrowLeft());
+            shopInv.setItem(52, Main.getNavigationItems().getArrowRight());
+            shopInv.setItem(49, Main.getNavigationItems().getPlayerHeadWallet(player));
 
             //SHOP ITEMS
-            for(int a = 0; a < Main.getShopItemBuilder().getShopItemsOres().size(); a++) {
-                shopInv.setItem(a+9, Main.getShopItemBuilder().getShopItemsOres().get(a));
-            }
+            Main.getShopPageBuilder().buildHomepage(shopInv, player);
 
-            System.out.println(Main.getShopItemBuilder().getShopItemsOres().size());
+            /* for(int a = 0; a < Main.getShopItemBuilder().getShopItemsOres().size(); a++) {
+                shopInv.setItem(a+9, Main.getShopItemBuilder().getShopItemsOres().get(a));
+            } */
 
             player.openInventory(shopInv);
 
         }
         return false;
+    }
+
+    public Inventory getShopInv(Player player) {
+        Inventory shopInv = Bukkit.getServer().createInventory(player, 54, ChatColor.AQUA + "Sky" + ChatColor.GOLD + "Shop");
+        return shopInv;
     }
 }

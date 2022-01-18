@@ -24,34 +24,18 @@ public class PlayerInventoryOpensListener implements Listener {
     public void onPlayerClickInventory(InventoryClickEvent event) {
         if(event.getInventory().getType() == InventoryType.CRAFTING || event.getInventory().getType() == InventoryType.PLAYER) {
             Player player = (Player) event.getWhoClicked();
-            player.getInventory().setItem(17, getChestItem(player));
+            player.getInventory().setItem(17, Main.getNavigationItems().getPocket(player));
         }
 
         if ((event.getCurrentItem() == null) || (event.getCurrentItem().getType().equals(Material.AIR)) || (event.getCurrentItem().getType().equals(Material.GRAY_STAINED_GLASS_PANE))) {
             return;
         }
 
-        if(event.getCurrentItem().getItemMeta().getDisplayName().equals(getChestItem((Player) event.getWhoClicked()).getItemMeta().getDisplayName()) && event.getSlot() == 17) {
+        if(event.getCurrentItem().getItemMeta().getDisplayName().equals(Main.getNavigationItems().getPocket((Player) event.getWhoClicked()).getItemMeta().getDisplayName()) && event.getSlot() == 17) {
             event.setCancelled(true);
         }
         if(event.isShiftClick() && (event.getSlot() == 17)) {
             event.setCancelled(true);
         }
-    }
-
-    private ItemStack getChestItem(Player player) {
-        ItemStack itemStack = new ItemStack(Material.BROWN_SHULKER_BOX);
-        ItemMeta itemMeta = itemStack.getItemMeta();
-        assert itemMeta != null;
-        itemMeta.addEnchant(Enchantment.DAMAGE_ALL, 1, true);
-        itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        itemMeta.setDisplayName(ChatColor.AQUA + "Bank " + ChatColor.GOLD + "Manager");
-        ArrayList<String> itemLore = new ArrayList<>();
-        itemLore.add(ChatColor.AQUA + "Pocket Money: " + ChatColor.GOLD + Main.getEconomy().format(Main.getEconomy().getBalance(player)));
-        itemMeta.setLore(itemLore);
-        itemStack.setItemMeta(itemMeta);
-
-        return itemStack;
     }
 }

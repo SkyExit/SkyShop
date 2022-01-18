@@ -5,7 +5,10 @@ import de.laurinhummel.skyshop.commands.MoneyCommand;
 import de.laurinhummel.skyshop.commands.ShopCommand;
 import de.laurinhummel.skyshop.events.PlayerInventoryOpensListener;
 import de.laurinhummel.skyshop.events.ShopClickListener;
+import de.laurinhummel.skyshop.shopsystem.NavigationItems;
 import de.laurinhummel.skyshop.shopsystem.ShopItemBuilder;
+import de.laurinhummel.skyshop.shopsystem.ShopItemLister;
+import de.laurinhummel.skyshop.shopsystem.ShopPageBuilder;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -50,7 +53,7 @@ public final class Main extends JavaPlugin {
         pluginManager.registerEvents((Listener) new PlayerInventoryOpensListener(), (Plugin) this);
         pluginManager.registerEvents((Listener) new ShopClickListener(), (Plugin) this);
 
-        Main.buildShop();
+        getShopItemLister().buildShop();
     }
 
     private boolean setupEconomy() {
@@ -97,18 +100,23 @@ public final class Main extends JavaPlugin {
         return head;
     }
 
-    public static void buildShop() {
-        getShopItemBuilder().buildShopItem(Material.DIAMOND, "DIAMOND", 100, 80, ShopItemBuilder.Categories.ORES, true);
-        getShopItemBuilder().buildShopItem(Material.REDSTONE, "REDSTONE", 5, 1, ShopItemBuilder.Categories.ORES, true);
-        getShopItemBuilder().buildShopItem(Material.EMERALD, "EMERALD", 20, 5, ShopItemBuilder.Categories.ORES, true);
-        getShopItemBuilder().buildShopItem(Material.COAL, "COAL", 10, 3, ShopItemBuilder.Categories.ORES, true);
-    }
-
     public static Main getPlugin() {
         return plugin;
     }
 
     public static ShopItemBuilder getShopItemBuilder() {
         return new ShopItemBuilder();
+    }
+
+    public static ShopItemLister getShopItemLister() {
+        return new ShopItemLister();
+    }
+
+    public static NavigationItems getNavigationItems() {
+        return new NavigationItems();
+    }
+
+    public static ShopPageBuilder getShopPageBuilder() {
+        return new ShopPageBuilder();
     }
 }
