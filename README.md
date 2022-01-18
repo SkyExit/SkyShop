@@ -1,6 +1,7 @@
 <h1>Your n°1 Shop Plugin</h1>
 <br>
 <h3>Installation:</h3>
+
 - Download the Plugin from the "releases" tab
 - Put it into your Servers "plugins" folder
 - Download Vault from Bukkit and put it there too
@@ -10,6 +11,7 @@
 <br/>
 <br/>
 <h3>Features:</h3>
+
 - Working shop command (/shop) with multiple categories for Blocks, Ores, Foraging, Food and Crops
   - (You can't buy anything yet)
 - Working economy command (/econ [Name / add, get, set] 'Name' 'Amount') to manage balance
